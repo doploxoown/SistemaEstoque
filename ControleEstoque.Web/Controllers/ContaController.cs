@@ -26,23 +26,27 @@ namespace ControleEstoque.Web.Controllers
                 return View(login);
             }
 
-            var achou = (login.Usuario == "thiago" && login.Senha == "123");
+            var usuario = UsuarioModel.ValidarUsuario(login.Usuario, login.Senha);
 
-            if (achou)
+            if (usuario != null)
             {
-                FormsAuthentication.SetAuthCookie(login.Usuario, login.LembrarMe);
+                var tiket = FormsAuthentication.Encrypt(new FormsAuthenticationTicket(
+                    1, usuario.Nome, DateTime.Now, DateTime.Now.AddHours(12), login.LembrarMe, PerfilModel.RecuperarPeloId(usuario.IdPerfil).Nome));
+                var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, tiket);
+                Response.Cookies.Add(cookie);
+
                 if (Url.IsLocalUrl(returnUrl))
                 {
                     return Redirect(returnUrl);
                 }
                 else
                 {
-                    RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
             }
             else
             {
-                ModelState.AddModelError("", "Login Inválido!");
+                ModelState.AddModelError("", "Login inválido.");
             }
 
             return View(login);

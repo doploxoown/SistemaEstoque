@@ -15,7 +15,7 @@ namespace ControleEstoque.Web.Controllers
         }
 
         [Authorize]
-        public ActionResult EntradaSaidaMes()
+        public ActionResult EntradaSaidaMesa()
         {
             return View();
         }
