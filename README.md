@@ -1,5 +1,5 @@
 # SistemaEstoque
-Sistema Desenvolvido em Asp.Net
+Sistema em Desenvolvimento utilizando Asp.Net MVC 5
 
 VEJA O SISTEMA EM FUNCIONAMENTO :
 
